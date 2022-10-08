@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Post - Code&Cry</title>
+    <link rel="stylesheet" href="nk-styles.css">
+  </head>
+<!-- TODO BODY-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  <body>
+  <h1 id="topic" ><u>Post Sensor</u></h1>
+    <form action="https://midterm-exam-010723313-2022.herokuapp.com/student_post" id="regis-form">
+    <h2 id="white-bar">Data Register</h2>
+    <h3 id="white-bar-r">
+        <!--TODO st-id ----------------------------------------------------------------->
+        <label for="st-id">
+        Studen-ID:
+                <input type="number" name="st_id" id="st-id"><br>
+            </label>
+        <!--TODO------------------------------------------------------------------------>
+
+        <!--! st-name ------------------------------------------------------------------>
+        <label for="st-name">
+        Studen Name:
+            <input type="text" name="st_name" id="st-name"><br>
+        </label>
+        <!--!--------------------------------------------------------------------------->
+        
+        <!--! sensor_name -------------------------------------------------------------->
+        <label for="sensor_name">
+        Sensor-Name:
+            <input type="text" name="sensor_name" id="sensor_name"><br>
+        </label>
+        <!--!--------------------------------------------------------------------------->
+
+        <!--! sensor_type -------------------------------------------------------------->
+        <label for="sensor_type">
+        Sensor-Type:
+            <input type="text" name="sensor_type" id="sensor_type"><br>
+        </label>
+        <!--!--------------------------------------------------------------------------->
+    
+        <!--! sensor_unit -------------------------------------------------------------->
+        <label for="sensor_unit">
+            <strong>Sensor-Unit:</strong>
+            <input type="text" name="sensor_unit" id="sensor_unit"><br>
+        </label>
+        <!--!--------------------------------------------------------------------------->
+            
+        <!--TODO sensor_value ---------------------------------------------------------->
+        <label for="sensor_value">
+            <strong>Sensor-Value:</strong>
+            <input type="number" step="any" name="sensor_value" id="sensor_value"><br>
+        </label>
+        <!--TODO------------------------------------------------------------------------>  
+    </h3>
+    <input type="submit" value="Create New-Sensor">
+    </form><br>
+    <a href = "https://midterm-exam-010723313-2022.herokuapp.com/"><caption>The midterm exam for IoT class KMUTNB (2022) - Nattawan Khamfubut - Code&Cry ;-;</caption></a><br>
+    
+<!-- TODO ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!--! Script-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <script>
+    /****************************************************************
+    * Helper function for POSTing data as JSON with fetch.
+    *****************************************************************/
+    async function postFormDataAsJson({ url, formData }) {
+	    const plainFormData = Object.fromEntries(formData.entries());
+	    const formDataJsonString = JSON.stringify(plainFormData);
+
+	    const fetchOptions = {
+		    method: "POST",
+		    headers: {
+			    "Content-Type": "application/json",
+			    Accept: "application/json",
+		    },
+		    body: formDataJsonString,
+	    };
+
+	    const response = await fetch(url, fetchOptions);
+            if (!response.ok) {
+		        const errorMessage = await response.text();
+		        throw new Error(errorMessage);
+	            }
+    window.location.href = "API_CompleteForm.html";
+	return response.json();
+    }
+    /************************************************************************************
+    * Event handler for a form submit event.
+    *************************************************************************************/
+    async function handleFormSubmit(event) {
+	    event.preventDefault();
+        
+	    const form = event.currentTarget;
+	    const url = form.action;
+	    try {
+		    const formData = new FormData(form);
+		    const responseData = await postFormDataAsJson({ url, formData });
+		    console.log({ responseData });
+	    } catch (error) { console.error(error); }
+    }
+
+    const regisForm = document.getElementById("regis-form");
+    regisForm.addEventListener("submit", handleFormSubmit);
+    </script>
+<!--!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->  
+</body>
+</html>

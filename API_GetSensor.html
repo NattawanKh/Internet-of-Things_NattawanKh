@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<!--*TODO: Head ---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+ 
+  <head lang="en">
+    <title>Code&Cry ;-;</title>
+    <link rel="stylesheet" href="nk-styles.css">
+  </head>
+
+<!--*TODO: Script ---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+     
+     <script> 
+          document.addEventListener('DOMContentLoaded',function (){       
+            document.querySelector('form').onsubmit = function (){
+                const sensor_data = document.querySelector('#sensor_data').value; // Take Sensor Path  (Sensitive) 
+                fetch(sensor_data)
+                .then(response => response.json())
+                .then(data => {
+                    // Take Sensor Data (Sensitive) ---------------------->
+                    const sensor = document.querySelector('#sensor').value;   
+                    const name = data[sensor].name;   
+                    const type = data[sensor].type;
+                    const unit = data[sensor].unit;
+                    const value = data[sensor].value;
+                    const plant_site = data[sensor]["plant-site"];
+                    const range = data[sensor].range;
+                    // --------------------------------------------------->
+                    if(sensor !== undefined){  // if it can define  
+                        document.querySelector('#name').innerHTML       = `${name} `;       // Show in tag id-name
+                        document.querySelector('#type').innerHTML       = `${type} `;       // Show in tag id-type
+                        document.querySelector('#unit').innerHTML       = `${unit} `;       // Show in tag id-unit
+                        document.querySelector('#value').innerHTML      = `${value} `;      // Show in tag id-value
+                        document.querySelector('#plant_site').innerHTML = `${plant_site} `; // Show in tag id-plant-site
+                        document.querySelector('#range').innerHTML      = `${range} `;      // Show in tag id-range
+                    }
+                    else{ // if it undefine 
+                        document.querySelector('#error').innerHTML = "[Error] Invalid Data."; // Show in tag id-error 
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+
+                return false;
+            }
+        });
+        </script>
+
+<!--*TODO: HTML Body --------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  
+  <body>
+     <!---------------------------------------------------------------------------------->
+     <!--! Tag Enter Sensor --------------------->
+          <h1 id="topic"><u>Get Sensor</u></h1>
+          <h3>
+          <!--! Sensor Sensor--------------------->
+    <form id="data-white-bar">
+          Sensor-Name:
+          <select name="sensor_data" id="sensor_data">
+            <option value='https://midterm-exam-010723313-2022.herokuapp.com/device?sensor_type=flow-transducer'>Flow Transducer</option>
+            <option value='https://midterm-exam-010723313-2022.herokuapp.com/device?sensor_type=level-transducer'>Level Transducer</option>
+            <option value='https://midterm-exam-010723313-2022.herokuapp.com/device?sensor_type=temperature-transducer'>Temperature Transducer</option>
+            <option value='https://midterm-exam-010723313-2022.herokuapp.com/device?sensor_type=pressure-transducer'>Pressure Transducer</option>
+          </select>   
+                    
+          <!--! Sensor ID   --------------------->
+          Sensor-ID:
+          <select name="sensor" id="sensor">
+            <option value="0">ID-0</option>
+            <option value="1">ID-1</option>
+            <option value="2">ID-2</option>
+          </select>   
+          <input type = "submit"><br>
+          <!--!---------------------------------->
+  
+    <!--!---------------------------------------->
+        <!-- *TODO: Show Sensor Data ------------>
+        <br>
+        <table>
+          <caption><u>Submit to show Sensor Data</u></caption>
+          <tr>
+              <th scope="table_topic">Sensor Name</th>
+              <th scope="table_topic">Type</th>
+              <th scope="table_topic">Range</th>
+              <th scope="table_topic">Value</th>
+              <th scope="table_topic">Unit</th>
+              <th scope="table_topic">Plant-Site</th>
+          </tr>
+          <tr>
+              <th scope="s_data"> <div id = "name"></div> </th>
+              <td> <div id = "type"> </div></td>
+              <td> <div id = "range"></div> </td>
+              <td> <div id = "value"> </div></td>
+              <td> <div id = "unit"> </div> </td>
+              <td> <div id = "plant_site"> </td>
+          </tr>
+      </table>
+        <!-- *TODO:------------------------------>   
+      <!---------------------------------------------------------------------------------->
+      <h3 id=form-white-bar >Want to create your sensor ?
+      <br><br>
+      <a class="gets_bn" href = "API_PostSensor.html"><caption>Create</caption></a> 
+      </h3>
+      </form>
+      
+      </h3>   
+      <a href = "https://midterm-exam-010723313-2022.herokuapp.com/"><caption>The midterm exam for IoT class KMUTNB (2022) - Nattawan Khamfubut - Code&Cry ;-;</caption></a><br>
+      <!--!-------------------------------------->
+      <!---------------------------------------------------------------------------------->
+  </body>
+</html>
+
+<!--*TODO:----------------------------------------------------------------------------------------------------------------------------------------------------------------------->

@@ -86,6 +86,7 @@
     /************************************************************************************
     * Event handler for a form submit event.
     *************************************************************************************/
+    // Read the values of all the form fields with FormData
     async function handleFormSubmit(event) {
 	    event.preventDefault();
         
@@ -97,7 +98,7 @@
 		    console.log({ responseData });
 	    } catch (error) { console.error(error); }
     }
-
+    /*-------Listen for when a user submits the form------*/ 
     const regisForm = document.getElementById("regis-form");
     regisForm.addEventListener("submit", handleFormSubmit);
     </script>

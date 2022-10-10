@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Post - Code&Cry ;-;</title>
+    <title>Post - Code&Cry</title>
     <link rel="stylesheet" href="nk-styles.css">
   </head>
 <!-- TODO BODY-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -59,48 +59,57 @@
 <!-- TODO ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!--! Script-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <script>
+    // Listen for when a user submits the form
+    const regisForm = document.getElementById("regis-form");
+    regisForm.addEventListener("submit", handleFormSubmit);
+
+    /************************************************************************************
+    * Event handler for a form submit event.
+    *************************************************************************************/
+    //Read the values of all the form fields with FormData
+    async function handleFormSubmit(event) {
+	    // disable refresh page by html
+        event.preventDefault();
+        // get element event handler attached
+	    const form = event.currentTarget;
+        // take API URL from "action"
+	    const url = form.action; 
+        // try catch exception
+	    try {       
+            // the prepare send form by  FormData Object
+		    const formData = new FormData(form); 
+            // the responseData
+		    const responseData = await postFormDataAsJson({ url, formData }); 
+            // just log responseData to the console
+		    console.log({ responseData });
+	    } catch (error) { console.error(error); } 
+        // show error in console | most possible when URL making fetch request not respond with JSON
+    }
     /****************************************************************
     * Helper function for POSTing data as JSON with fetch.
     *****************************************************************/
+    // Format the data as JSON and POST it to URL with fetch
     async function postFormDataAsJson({ url, formData }) {
-	    const plainFormData = Object.fromEntries(formData.entries());
-	    const formDataJsonString = JSON.stringify(plainFormData);
+	    const plainFormData = Object.fromEntries(formData.entries()); // converting to Object
+	    const formDataJsonString = JSON.stringify(plainFormData);     // converting to JSON string
 
 	    const fetchOptions = {
 		    method: "POST",
 		    headers: {
-			    "Content-Type": "application/json",
-			    Accept: "application/json",
+			            "Content-Type": "application/json",  // tell the API request body is JSON
+			    Accept: "application/json",                  // accept JSON responses
 		    },
-		    body: formDataJsonString,
+		    body: formDataJsonString,   // body POST request is the JSON string (formDataJsonString)
 	    };
-
-	    const response = await fetch(url, fetchOptions);
+	    const response = await fetch(url, fetchOptions);     // POST Data
             if (!response.ok) {
 		        const errorMessage = await response.text();
 		        throw new Error(errorMessage);
 	            }
-    window.location.href = "API_CompleteForm.html";
+    window.location.href = "API_CompleteForm.html"; // Go to Complete Page
 	return response.json();
     }
-    /************************************************************************************
-    * Event handler for a form submit event.
-    *************************************************************************************/
-    // Read the values of all the form fields with FormData
-    async function handleFormSubmit(event) {
-	    event.preventDefault();
-        
-	    const form = event.currentTarget;
-	    const url = form.action;
-	    try {
-		    const formData = new FormData(form);
-		    const responseData = await postFormDataAsJson({ url, formData });
-		    console.log({ responseData });
-	    } catch (error) { console.error(error); }
-    }
-    /*-------Listen for when a user submits the form------*/ 
-    const regisForm = document.getElementById("regis-form");
-    regisForm.addEventListener("submit", handleFormSubmit);
+    //super thank for https://simonplend.com/how-to-use-fetch-to-post-form-data-as-json-to-your-api/
     </script>
 <!--!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->  
 </body>

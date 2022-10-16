@@ -13,7 +13,7 @@
         <!--TODO st-id ----------------------------------------------------------------->
         <label for="st-id">
         Studen-ID:
-                <input type="number" name="st_id" id="st-id"><br>
+                <input type="number" min="0" name="st_id" id="st-id"><br>
             </label>
         <!--TODO------------------------------------------------------------------------>
 
@@ -48,7 +48,7 @@
         <!--TODO sensor_value ---------------------------------------------------------->
         <label for="sensor_value">
             <strong>Sensor-Value:</strong>
-            <input type="number" step="any" name="sensor_value" id="sensor_value"><br>
+            <input type="number" min="0" step="any" name="sensor_value" id="sensor_value"><br>
         </label>
         <!--TODO------------------------------------------------------------------------>  
     </h3>
@@ -62,7 +62,7 @@
     // Listen for when a user submits the form
     const regisForm = document.getElementById("regis-form");
     regisForm.addEventListener("submit", handleFormSubmit);
-
+    const st_id = document.querySelector('#st_id').value; 
     /************************************************************************************
     * Event handler for a form submit event.
     *************************************************************************************/
@@ -84,7 +84,7 @@
 		    console.log({ responseData });
 	    } catch (error) { console.error(error); } 
         // show error in console | most possible when URL making fetch request not respond with JSON
-    }
+    } 
     /****************************************************************
     * Helper function for POSTing data as JSON with fetch.
     *****************************************************************/
@@ -108,7 +108,7 @@
 	            }
     window.location.href = "API_CompleteForm.html"; // Go to Complete Page
 	return response.json();
-    }
+    } 
     // Thanks for the post 
     // How to use fetch to POST form data as JSON to your API by Simon Plenderleith : https://simonplend.com/how-to-use-fetch-to-post-form-data-as-json-to-your-api/
     </script>
